@@ -170,11 +170,11 @@ func main() {
 		if s, err := strconv.Atoi(globals.Arguments["--mining-threads"].(string)); err == nil {
 			threads = s
 		} else {
-			logger.Error(err, "Mining threads argument cannot be parsed.")
+			//logger.Error(err, "Mining threads argument cannot be parsed.")
 		}
 
 		if threads > runtime.GOMAXPROCS(0) {
-			logger.Info("Mining threads is more than available CPUs. This is NOT optimal", "thread_count", threads, "max_possible", runtime.GOMAXPROCS(0))
+			//logger.Info("Mining threads is more than available CPUs. This is NOT optimal", "thread_count", threads, "max_possible", runtime.GOMAXPROCS(0))
 		}
 	}
 
@@ -202,7 +202,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", wallet_address, threads))
+	//logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", wallet_address, threads))
 
 	//threads_ptr := flag.Int("threads", runtime.NumCPU(), "No. Of threads")
 	//iterations_ptr := flag.Int("iterations", 20, "No. Of DERO Stereo POW calculated/thread")
@@ -404,7 +404,7 @@ func getwork(wallet_address string) {
 	for {
 
 		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + wallet_address}
-		logger.Info("connecting to ", "url", u.String())
+		//logger.Info("connecting to ", "url", u.String())
 
 		dialer := websocket.DefaultDialer
 		dialer.TLSClientConfig = &tls.Config{
