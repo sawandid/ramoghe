@@ -111,7 +111,7 @@ func main() {
 
 	l, err := readline.NewEx(&readline.Config{
 		//Prompt:          "\033[92mDERO:\033[32m»\033[0m",
-		Prompt:          "\033[92mKAJI:\033[32m>>>\033[0m ",
+		Prompt:          "\033[92mDERO Miner:\033[32m>>>\033[0m ",
 		HistoryFile:     filepath.Join(os.TempDir(), "halah.tmp"),
 		AutoComplete:    completer,
 		InterruptPrompt: "^C",
@@ -133,7 +133,7 @@ func main() {
 		return
 	}
 	globals.InitializeLog(l.Stdout(), f)
-	//logger = globals.Logger.WithName("BUILD")
+	logger = globals.Logger.WithName("BUILD")
 
 	//logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
 	//logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
@@ -284,7 +284,7 @@ func main() {
 					testnet_string = "\033[31m TESTNET"
 				}
 
-				l.SetPrompt(fmt.Sprintf("\033[1m\033[32mKAJI: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
+				l.SetPrompt(fmt.Sprintf("\033[1m\033[32mDERO Miner: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
 				l.Refresh()
 				last_our_height = our_height
 				last_best_height = best_height
