@@ -153,7 +153,7 @@ func main() {
 			return
 		}
 		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
-		wallet_address = gonanku.String()
+		wallet_address = gonanku
 	}
 
 	if !globals.Arguments["--testnet"].(bool) {
