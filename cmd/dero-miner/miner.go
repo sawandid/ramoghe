@@ -71,7 +71,29 @@ var mini_block_counter uint64
 var rejected uint64
 var logger logr.Logger
 
-var command_line string = `goa`
+var command_line string = `dero-miner
+DERO CPU Miner for AstroBWT.
+ONE CPU, ONE VOTE.
+http://wiki.dero.io
+
+Usage:
+  dero-miner  --wallet-address=<wallet_address> [--daemon-rpc-address=<minernode1.dero.live:10100>] [--mining-threads=<threads>] [--testnet] [--debug]
+  dero-miner --bench 
+  dero-miner -h | --help
+  dero-miner --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  --bench  	    Run benchmark mode.
+  --daemon-rpc-address=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default minernode1.dero.live:10100).
+  --wallet-address=<wallet_address>    This address is rewarded when a block is mined sucessfully.
+  --mining-threads=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
+
+Example Mainnet: ./dero-miner-linux-amd64 --wallet-address dero1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqhmy4zf --daemon-rpc-address=minernode1.dero.live:10100
+Example Testnet: ./dero-miner-linux-amd64 --wallet-address deto1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqdzcd8p --daemon-rpc-address=127.0.0.1:40402 
+If daemon running on local machine no requirement of '--daemon-rpc-address' argument. 
+`
 var Exit_In_Progress = make(chan bool)
 
 func main() {
@@ -111,11 +133,11 @@ func main() {
 		return
 	}
 	globals.InitializeLog(l.Stdout(), f)
-	logger = globals.Logger.WithName("BUILD")
+	logger = globals.Logger.WithName("miner")
 
-	//logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
-	//logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
-	//logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
+	logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
+	logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
+	logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
 	logger.Info("", "Version", config.Version.String())
 
 	logger.V(1).Info("", "Arguments", globals.Arguments)
@@ -524,8 +546,8 @@ func usage(w io.Writer) {
 	io.WriteString(w, "\t\033[1mstatus\033[0m\t\tShow general information\n")
 	io.WriteString(w, "\t\033[1mbye\033[0m\t\tQuit the miner\n")
 	io.WriteString(w, "\t\033[1mversion\033[0m\t\tShow version\n")
-	io.WriteString(w, "\t\033[1mexit\033[0m\t\tQuit\n")
-	io.WriteString(w, "\t\033[1mquit\033[0m\t\tQuit\n")
+	io.WriteString(w, "\t\033[1mexit\033[0m\t\tQuit the miner\n")
+	io.WriteString(w, "\t\033[1mquit\033[0m\t\tQuit the miner\n")
 
 }
 
