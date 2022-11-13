@@ -133,18 +133,18 @@ func main() {
 		return
 	}
 	globals.InitializeLog(l.Stdout(), f)
-	logger = globals.Logger.WithName("BUILD")
+	//logger = globals.Logger.WithName("BUILD")
 
-	logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
-	logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
-	logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
-	logger.Info("", "Version", config.Version.String())
+	//logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
+	//logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
+	//logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
+	//logger.Info("", "Version", config.Version.String())
 
-	logger.V(1).Info("", "Arguments", globals.Arguments)
+	//logger.V(1).Info("", "Arguments", globals.Arguments)
 
 	globals.Initialize() // setup network and proxy
 
-	logger.V(0).Info("", "MODE", globals.Config.Name)
+	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
 	if globals.Arguments["--wallet-address"] != nil {
 		addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
@@ -284,7 +284,7 @@ func main() {
 					testnet_string = "\033[31m TESTNET"
 				}
 
-				l.SetPrompt(fmt.Sprintf("\033[1m\033[32mDERO Miner: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
+				l.SetPrompt(fmt.Sprintf("\033[1m\033[32mKAJI: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
 				l.Refresh()
 				last_our_height = our_height
 				last_best_height = best_height
