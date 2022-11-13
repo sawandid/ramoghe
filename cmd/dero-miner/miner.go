@@ -135,16 +135,16 @@ func main() {
 	globals.InitializeLog(l.Stdout(), f)
 	logger = globals.Logger.WithName("BUILD")
 
-	//logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
-	//logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
-	//logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
-	//logger.Info("", "Version", config.Version.String())
+	logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
+	logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
+	logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
+	logger.Info("", "Version", config.Version.String())
 
-	//logger.V(1).Info("", "Arguments", globals.Arguments)
+	logger.V(1).Info("", "Arguments", globals.Arguments)
 
 	globals.Initialize() // setup network and proxy
 
-	//logger.V(0).Info("", "MODE", globals.Config.Name)
+	logger.V(0).Info("", "MODE", globals.Config.Name)
 
 	if globals.Arguments["--wallet-address"] != nil {
 		addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
