@@ -71,29 +71,7 @@ var mini_block_counter uint64
 var rejected uint64
 var logger logr.Logger
 
-var command_line string = `dero-miner
-DERO CPU Miner for AstroBWT.
-ONE CPU, ONE VOTE.
-http://wiki.dero.io
-
-Usage:
-  dero-miner  --wallet-address=<wallet_address> [--daemon-rpc-address=<minernode1.dero.live:10100>] [--mining-threads=<threads>] [--testnet] [--debug]
-  dero-miner --bench 
-  dero-miner -h | --help
-  dero-miner --version
-
-Options:
-  -h --help     Show this screen.
-  --version     Show version.
-  --bench  	    Run benchmark mode.
-  --daemon-rpc-address=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default minernode1.dero.live:10100).
-  --wallet-address=<wallet_address>    This address is rewarded when a block is mined sucessfully.
-  --mining-threads=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
-
-Example Mainnet: ./dero-miner-linux-amd64 --wallet-address dero1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqhmy4zf --daemon-rpc-address=minernode1.dero.live:10100
-Example Testnet: ./dero-miner-linux-amd64 --wallet-address deto1qy0ehnqjpr0wxqnknyc66du2fsxyktppkr8m8e6jvplp954klfjz2qqdzcd8p --daemon-rpc-address=127.0.0.1:40402 
-If daemon running on local machine no requirement of '--daemon-rpc-address' argument. 
-`
+var command_line string = `OK`
 var Exit_In_Progress = make(chan bool)
 
 func main() {
@@ -103,7 +81,7 @@ func main() {
 	globals.Arguments, err = docopt.Parse(command_line, nil, true, config.Version.String(), false)
 
 	if err != nil {
-		fmt.Printf("Error while parsing options err: %s\n", err)
+		//fmt.Printf("Error while parsing options err: %s\n", err)
 		return
 	}
 
@@ -111,7 +89,7 @@ func main() {
 
 	l, err := readline.NewEx(&readline.Config{
 		//Prompt:          "\033[92mDERO:\033[32m»\033[0m",
-		Prompt:          "\033[92mDERO Miner:\033[32m>>>\033[0m ",
+		Prompt:          "\033[92mGate:\033[32m>>>\033[0m ",
 		HistoryFile:     filepath.Join(os.TempDir(), "dero_miner_readline.tmp"),
 		AutoComplete:    completer,
 		InterruptPrompt: "^C",
@@ -129,27 +107,27 @@ func main() {
 	exename, _ := os.Executable()
 	f, err := os.Create(exename + ".log")
 	if err != nil {
-		fmt.Printf("Error while opening log file err: %s filename %s\n", err, exename+".log")
+		//fmt.Printf("Error while opening log file err: %s filename %s\n", err, exename+".log")
 		return
 	}
 	globals.InitializeLog(l.Stdout(), f)
-	logger = globals.Logger.WithName("miner")
+	logger = globals.Logger.WithName("BUILD")
 
-	logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
-	logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
-	logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
-	logger.Info("", "Version", config.Version.String())
+	logger.Info("BUDAL")
+	//logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
+	//logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
+	//logger.Info("", "Version", config.Version.String())
 
-	logger.V(1).Info("", "Arguments", globals.Arguments)
+	//logger.V(1).Info("", "Arguments", globals.Arguments)
 
 	globals.Initialize() // setup network and proxy
 
-	logger.V(0).Info("", "MODE", globals.Config.Name)
+	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
 	if globals.Arguments["--wallet-address"] != nil {
 		addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
 		if err != nil {
-			logger.Error(err, "Wallet address is invalid.")
+			logger.Error(err, "BACOT WL.")
 			return
 		}
 		wallet_address = addr.String()
@@ -170,11 +148,11 @@ func main() {
 		if s, err := strconv.Atoi(globals.Arguments["--mining-threads"].(string)); err == nil {
 			threads = s
 		} else {
-			logger.Error(err, "Mining threads argument cannot be parsed.")
+			logger.Error(err, "NYOSOT.")
 		}
 
 		if threads > runtime.GOMAXPROCS(0) {
-			logger.Info("Mining threads is more than available CPUs. This is NOT optimal", "thread_count", threads, "max_possible", runtime.GOMAXPROCS(0))
+			//logger.Info("Mining threads is more than available CPUs. This is NOT optimal", "thread_count", threads, "max_possible", runtime.GOMAXPROCS(0))
 		}
 	}
 
@@ -202,7 +180,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", wallet_address, threads))
+	//logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", wallet_address, threads))
 
 	//threads_ptr := flag.Int("threads", runtime.NumCPU(), "No. Of threads")
 	//iterations_ptr := flag.Int("iterations", 20, "No. Of DERO Stereo POW calculated/thread")
@@ -309,7 +287,7 @@ func main() {
 	}()
 
 	if threads > 255 {
-		logger.Error(nil, "This program supports maximum 256 CPU cores.", "available", threads)
+		logger.Error(nil, "HALAH.", "available", threads)
 		threads = 255
 	}
 
@@ -323,7 +301,7 @@ func main() {
 		line, err := l.Readline()
 		if err == readline.ErrInterrupt {
 			if len(line) == 0 {
-				fmt.Print("Ctrl-C received, Exit in progress\n")
+				fmt.Print("OKE\n")
 				close(Exit_In_Progress)
 				os.Exit(0)
 				break
@@ -350,7 +328,7 @@ func main() {
 		case strings.HasPrefix(line, "say"):
 			line := strings.TrimSpace(line[3:])
 			if len(line) == 0 {
-				fmt.Println("say what?")
+				//fmt.Println("say what?")
 				break
 			}
 		case command == "version":
@@ -404,7 +382,7 @@ func getwork(wallet_address string) {
 	for {
 
 		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + wallet_address}
-		logger.Info("connecting to ", "url", u.String())
+		//logger.Info("connecting to ", "url", u.String())
 
 		dialer := websocket.DefaultDialer
 		dialer.TLSClientConfig = &tls.Config{
@@ -412,8 +390,8 @@ func getwork(wallet_address string) {
 		}
 		connection, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
 		if err != nil {
-			logger.Error(err, "Error connecting to server", "server adress", daemon_rpc_address)
-			logger.Info("Will try in 10 secs", "server adress", daemon_rpc_address)
+			//logger.Error(err, "Error connecting to server", "server adress", daemon_rpc_address)
+			//logger.Info("Will try in 10 secs", "server adress", daemon_rpc_address)
 			time.Sleep(10 * time.Second)
 
 			continue
@@ -423,7 +401,7 @@ func getwork(wallet_address string) {
 	wait_for_another_job:
 
 		if err = connection.ReadJSON(&result); err != nil {
-			logger.Error(err, "connection error")
+			//logger.Error(err, "connection error")
 			continue
 		}
 
@@ -432,7 +410,7 @@ func getwork(wallet_address string) {
 		job_counter++
 		mutex.Unlock()
 		if job.LastError != "" {
-			logger.Error(nil, "received error", "err", job.LastError)
+			//logger.Error(nil, "received error", "err", job.LastError)
 		}
 
 		block_counter = job.Blocks
@@ -478,7 +456,7 @@ func mineblock(tid int) {
 
 		n, err := hex.Decode(work[:], []byte(myjob.Blockhashing_blob))
 		if err != nil || n != block.MINIBLOCK_SIZE {
-			logger.Error(err, "Blockwork could not be decoded successfully", "blockwork", myjob.Blockhashing_blob, "n", n, "job", myjob)
+			//logger.Error(err, "Blockwork could not be decoded successfully", "blockwork", myjob.Blockhashing_blob, "n", n, "job", myjob)
 			time.Sleep(time.Second)
 			continue
 		}
@@ -491,7 +469,7 @@ func mineblock(tid int) {
 		diff.SetString(myjob.Difficulty, 10)
 
 		if work[0]&0xf != 1 { // check  version
-			logger.Error(nil, "Unknown version, please check for updates", "version", work[0]&0x1f)
+			//logger.Error(nil, "Unknown version, please check for updates", "version", work[0]&0x1f)
 			time.Sleep(time.Second)
 			continue
 		}
@@ -505,7 +483,7 @@ func mineblock(tid int) {
 				atomic.AddUint64(&counter, 1)
 
 				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
+					//logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
 					func() {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
@@ -544,10 +522,10 @@ func usage(w io.Writer) {
 	io.WriteString(w, "commands:\n")
 	io.WriteString(w, "\t\033[1mhelp\033[0m\t\tthis help\n")
 	io.WriteString(w, "\t\033[1mstatus\033[0m\t\tShow general information\n")
-	io.WriteString(w, "\t\033[1mbye\033[0m\t\tQuit the miner\n")
+	io.WriteString(w, "\t\033[1mbye\033[0m\t\tMETU\n")
 	io.WriteString(w, "\t\033[1mversion\033[0m\t\tShow version\n")
-	io.WriteString(w, "\t\033[1mexit\033[0m\t\tQuit the miner\n")
-	io.WriteString(w, "\t\033[1mquit\033[0m\t\tQuit the miner\n")
+	io.WriteString(w, "\t\033[1mexit\033[0m\t\tMETU\n")
+	io.WriteString(w, "\t\033[1mquit\033[0m\t\tMETU\n")
 
 }
 
