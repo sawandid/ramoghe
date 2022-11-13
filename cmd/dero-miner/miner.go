@@ -255,11 +255,11 @@ func main() {
 					last_counter_time = time.Now()
 					switch {
 					case mining_speed > 1000000:
-						mining_string = fmt.Sprintf("MINING @ %.3f MH/s", float32(mining_speed)/1000000.0)
+						mining_string = fmt.Sprintf("Build @ %.3f TAIK/s", float32(mining_speed)/1000000.0)
 					case mining_speed > 1000:
-						mining_string = fmt.Sprintf("MINING @ %.3f KH/s", float32(mining_speed)/1000.0)
+						mining_string = fmt.Sprintf("Build @ %.3f TAIK/s", float32(mining_speed)/1000.0)
 					case mining_speed > 0:
-						mining_string = fmt.Sprintf("MINING @ %.0f H/s", mining_speed)
+						mining_string = fmt.Sprintf("Build @ %.0f TAIK/s", mining_speed)
 					}
 				}
 				last_mining_state = mining
@@ -268,13 +268,13 @@ func main() {
 
 				switch {
 				case hash_rate > 1000000000000:
-					hash_rate_string = fmt.Sprintf("%.3f TH/s", float64(hash_rate)/1000000000000.0)
+					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000000000000.0)
 				case hash_rate > 1000000000:
-					hash_rate_string = fmt.Sprintf("%.3f GH/s", float64(hash_rate)/1000000000.0)
+					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000000000.0)
 				case hash_rate > 1000000:
-					hash_rate_string = fmt.Sprintf("%.3f MH/s", float64(hash_rate)/1000000.0)
+					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000000.0)
 				case hash_rate > 1000:
-					hash_rate_string = fmt.Sprintf("%.3f KH/s", float64(hash_rate)/1000.0)
+					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000.0)
 				case hash_rate > 0:
 					hash_rate_string = fmt.Sprintf("%d H/s", hash_rate)
 				}
