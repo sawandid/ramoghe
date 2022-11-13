@@ -77,7 +77,7 @@ ONE KAJI, ONE VOTE.
 http://google.com
 
 Usage:
-  KAJI  --wallet-address=<wallet_address> [--daemon-rpc-address=<minernode1.dero.live:10100>] [--mining-threads=<threads>] [--testnet] [--debug]
+  KAJI  --KAJI=<KAJI> [--KAJI:10100>] [--KAJI=<threads>] [--KAJI] [--debug]
   KAJI --bench 
   KAJI -h | --help
   KAJI --version
@@ -111,8 +111,8 @@ func main() {
 
 	l, err := readline.NewEx(&readline.Config{
 		//Prompt:          "\033[92mDERO:\033[32m»\033[0m",
-		Prompt:          "\033[92mDERO Miner:\033[32m>>>\033[0m ",
-		HistoryFile:     filepath.Join(os.TempDir(), "dero_miner_readline.tmp"),
+		Prompt:          "\033[92mKAJI:\033[32m>>>\033[0m ",
+		HistoryFile:     filepath.Join(os.TempDir(), "halah.tmp"),
 		AutoComplete:    completer,
 		InterruptPrompt: "^C",
 		EOFPrompt:       "exit",
@@ -133,18 +133,18 @@ func main() {
 		return
 	}
 	globals.InitializeLog(l.Stdout(), f)
-	logger = globals.Logger.WithName("miner")
+	logger = globals.Logger.WithName("BUILD")
 
-	logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
-	logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
-	logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
-	logger.Info("", "Version", config.Version.String())
+	//logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
+	//logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
+	//logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
+	//logger.Info("", "Version", config.Version.String())
 
-	logger.V(1).Info("", "Arguments", globals.Arguments)
+	//logger.V(1).Info("", "Arguments", globals.Arguments)
 
 	globals.Initialize() // setup network and proxy
 
-	logger.V(0).Info("", "MODE", globals.Config.Name)
+	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
 	if globals.Arguments["--wallet-address"] != nil {
 		addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
