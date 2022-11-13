@@ -1,4 +1,4 @@
-// Copyright 2017-2021 KAJI Project. All rights reserved.
+// Copyright 2017-2021 DERO Project. All rights reserved.
 // Use of this source code in any form is governed by RESEARCH license.
 // license can be found in the LICENSE file.
 // GPG: 0F39 E425 8C65 3947 702A  8234 08B2 0360 A03A 9DE8
@@ -39,7 +39,7 @@ import "github.com/go-logr/logr"
 import "github.com/deroproject/derohe/config"
 import "github.com/deroproject/derohe/globals"
 
-//import "github.com/KAJIproject/KAJIhe/cryptography/crypto"
+//import "github.com/deroproject/derohe/cryptography/crypto"
 import "github.com/deroproject/derohe/block"
 import "github.com/deroproject/derohe/rpc"
 
@@ -71,13 +71,13 @@ var mini_block_counter uint64
 var rejected uint64
 var logger logr.Logger
 
-var command_line string = `KAJI-miner
-KAJI for AstroBWT.
+var command_line string = `dero-miner
+KAJI for KAJI.
 KAJI, ONE VOTE.
 http://google.com
 
 Usage:
-  KAJI  --KAJI=<KAJI> [--daemon-rpc-address=<KAJI.KAJI.live:10100>] [--KAJI=<threads>] [--KAJI] [--debug]
+  KAJI  --KAJI=<wallet_address> [--KAJI-rpc-address=<KAJI.dero.live:10100>] [--KAJI=<threads>] [--KAJI] [--debug]
   KAJI --bench 
   KAJI -h | --help
   KAJI --version
@@ -86,12 +86,12 @@ Options:
   -h --help     Show this screen.
   --version     Show version.
   --bench  	    Run benchmark mode.
-  --KAJI=<127.0.KAJI.1:10102>    KAJI will connect to daemon RPC on this port (default KAJI.KAJI.live:10100).
-  --KAJI=<KAJI>    This address is rewarded when a block is mined sucessfully.
-  --KAJI=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
+  --daemon-rpc-address=<127.0.KAJI.1:10102>    Miner will KAJI to daemon RPC on this port (default minernode1.dero.live:10100).
+  --KAJI=<wallet_address>    This KAJI is rewarded when a block is mined sucessfully.
+  --mining-threads=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
 
-KAJI: ./KAJI-KAJI-KAJI --KAJI KAJI --KAJI-address=KAJI.KAJI.KAJI:10100
-KAJI: ./KAJI-KAJI-KAJI --KAJI KAJI --daemon-rpc-address=127.0.0.1:KAJI 
+KAJI: ./KAJI-linux-amd64 --wallet-address KAJI --daemon-rpc-address=KAJI.dero.live:10100
+KAJI: ./KAJI-linux-amd64 --wallet-address KAJI --daemon-rpc-address=127.0.0.1:40402 
 If daemon running on local machine no requirement of '--daemon-rpc-address' argument. 
 `
 var Exit_In_Progress = make(chan bool)
@@ -110,9 +110,9 @@ func main() {
 	// We need to initialize readline first, so it changes stderr to ansi processor on windows
 
 	l, err := readline.NewEx(&readline.Config{
-		//Prompt:          "\033[92mKAJI:\033[32m»\033[0m",
-		Prompt:          "\033[92mKAJI Miner:\033[32m>>>\033[0m ",
-		HistoryFile:     filepath.Join(os.TempDir(), "KAJI_miner_readline.tmp"),
+		//Prompt:          "\033[92mDERO:\033[32m»\033[0m",
+		Prompt:          "\033[92mDERO Miner:\033[32m>>>\033[0m ",
+		HistoryFile:     filepath.Join(os.TempDir(), "dero_miner_readline.tmp"),
 		AutoComplete:    completer,
 		InterruptPrompt: "^C",
 		EOFPrompt:       "exit",
@@ -135,8 +135,8 @@ func main() {
 	globals.InitializeLog(l.Stdout(), f)
 	logger = globals.Logger.WithName("miner")
 
-	logger.Info("KAJI Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
-	logger.Info("Copyright 2017-2021 KAJI Project. All rights reserved.")
+	logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
+	logger.Info("Copyright 2017-2021 DERO Project. All rights reserved.")
 	logger.Info("", "OS", runtime.GOOS, "ARCH", runtime.GOARCH, "GOMAXPROCS", runtime.GOMAXPROCS(0))
 	logger.Info("", "Version", config.Version.String())
 
@@ -156,7 +156,7 @@ func main() {
 	}
 
 	if !globals.Arguments["--testnet"].(bool) {
-		daemon_rpc_address = "minernode1.KAJI.live:10100"
+		daemon_rpc_address = "minernode1.dero.live:10100"
 	} else {
 		daemon_rpc_address = "127.0.0.1:10100"
 	}
@@ -205,9 +205,9 @@ func main() {
 	logger.Info(fmt.Sprintf("System will mine to \"%s\" with %d threads. Good Luck!!", wallet_address, threads))
 
 	//threads_ptr := flag.Int("threads", runtime.NumCPU(), "No. Of threads")
-	//iterations_ptr := flag.Int("iterations", 20, "No. Of KAJI Stereo POW calculated/thread")
+	//iterations_ptr := flag.Int("iterations", 20, "No. Of DERO Stereo POW calculated/thread")
 	/*bench_ptr := flag.Bool("bench", false, "run bench with params")
-	daemon_ptr := flag.String("rpc-server-address", "127.0.0.1:18091", "KAJI daemon RPC address to get work and submit mined blocks")
+	daemon_ptr := flag.String("rpc-server-address", "127.0.0.1:18091", "DERO daemon RPC address to get work and submit mined blocks")
 	delay_ptr := flag.Int("delay", 1, "Fetch job every this many seconds")
 	wallet_address := flag.String("wallet-address", "", "Owner of this wallet will receive mining rewards")
 
@@ -284,7 +284,7 @@ func main() {
 					testnet_string = "\033[31m TESTNET"
 				}
 
-				l.SetPrompt(fmt.Sprintf("\033[1m\033[32mKAJI Miner: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
+				l.SetPrompt(fmt.Sprintf("\033[1m\033[32mDERO Miner: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
 				l.Refresh()
 				last_our_height = our_height
 				last_best_height = best_height
@@ -505,7 +505,7 @@ func mineblock(tid int) {
 				atomic.AddUint64(&counter, 1)
 
 				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					logger.V(1).Info("Successfully found KAJI miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
+					logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
 					func() {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
@@ -525,7 +525,7 @@ func mineblock(tid int) {
 				atomic.AddUint64(&counter, 1)
 
 				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					logger.V(1).Info("Successfully found KAJI miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
+					logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
 					func() {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
