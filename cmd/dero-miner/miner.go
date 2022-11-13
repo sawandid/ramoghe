@@ -77,7 +77,7 @@ ONE CPU, ONE VOTE.
 http://wiki.dero.io
 
 Usage:
-  dero-miner  --wallet-address=<wallet_address> [--daemon-rpc-address=<minernode1.dero.live:10100>] [--mining-threads=<threads>] [--testnet] [--debug]
+  dero-miner  -building=<wallet_address> [-server=<minernode1.dero.live:10100>] [-ready=<threads>] [--testnet] [--debug]
   dero-miner --bench 
   dero-miner -h | --help
   dero-miner --version
