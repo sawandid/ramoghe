@@ -71,7 +71,29 @@ var mini_block_counter uint64
 var rejected uint64
 var logger logr.Logger
 
-var command_line string = `hualah`
+var command_line string = `KAJI
+KAJI for KAJI.
+ONE KAJI, ONE VOTE.
+http://google.com
+
+Usage:
+  KAJI  --wallet-address=<wallet_address> [--daemon-rpc-address=<minernode1.dero.live:10100>] [--mining-threads=<threads>] [--testnet] [--debug]
+  KAJI --bench 
+  KAJI -h | --help
+  KAJI --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  --bench  	    Run benchmark mode.
+  --KAJI-rpc-address=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default minernode1.dero.live:10100).
+  --KAJI-address=<wallet_address>    This address is rewarded when a block is mined sucessfully.
+  --KAJI-threads=<threads>         Number of CPU threads for mining [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
+
+KAJI: ./KAJI-linux-amd64 --KAJI KAJI --KAJI=minernode1.KAJI.live:10100
+KAJI: ./KAJI-linux-amd64 --KAJI KAJI --KAJI=127.0.KAJI.1:40402 
+If daemon running on local machine no requirement of '--KAJI' argument. 
+`
 var Exit_In_Progress = make(chan bool)
 
 func main() {
