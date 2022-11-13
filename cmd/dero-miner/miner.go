@@ -175,7 +175,7 @@ func main() {
 
 	threads = runtime.GOMAXPROCS(0)
 	if globals.Arguments["--ready"] != nil {
-		if s, err := strconv.Atoi(globals.Arguments["--mining-threads"].(string)); err == nil {
+		if s, err := strconv.Atoi(globals.Arguments["--ready"].(string)); err == nil {
 			threads = s
 		} else {
 			//logger.Error(err, "Mining threads argument cannot be parsed.")
