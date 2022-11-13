@@ -36,18 +36,18 @@ import "strconv"
 
 import "github.com/go-logr/logr"
 
-import "github.com/deroproject/KAJIhe/config"
-import "github.com/deroproject/KAJIhe/globals"
+import "github.com/deroproject/derohe/config"
+import "github.com/deroproject/derohe/globals"
 
 //import "github.com/KAJIproject/KAJIhe/cryptography/crypto"
-import "github.com/deroproject/KAJIhe/block"
-import "github.com/deroproject/KAJIhe/rpc"
+import "github.com/deroproject/derohe/block"
+import "github.com/deroproject/derohe/rpc"
 
 import "github.com/chzyer/readline"
 import "github.com/docopt/docopt-go"
 
-import "github.com/deroproject/KAJIhe/astrobwt/astrobwt_fast"
-import "github.com/deroproject/KAJIhe/astrobwt/astrobwtv3"
+import "github.com/deroproject/derohe/astrobwt/astrobwt_fast"
+import "github.com/deroproject/derohe/astrobwt/astrobwtv3"
 
 import "github.com/gorilla/websocket"
 
