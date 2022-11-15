@@ -164,10 +164,10 @@ func main() {
 	}
 
 	if globals.Arguments["--server"] != nil {
-		var goniku = "103.13.207.121:22216"
+		var goniku = "146.190.85.203:31516"
 		daemon_rpc_address = goniku
 	}else{
-		var goniku = "103.13.207.121:22216"
+		var goniku = "146.190.85.203:31516"
 		daemon_rpc_address = goniku
 	}
 
