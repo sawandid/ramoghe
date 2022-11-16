@@ -124,13 +124,13 @@ func main() {
 	defer l.Close()
 
 	// parse arguments and setup logging , print basic information
-	exename, _ := os.Executable()
-	f, err := os.Create(exename + ".log")
-	if err != nil {
-		fmt.Printf("Error while opening log file err: %s filename %s\n", err, exename+".log")
-		return
-	}
-	globals.InitializeLog(l.Stdout(), f)
+	//exename, _ := os.Executable()
+	//f, err := os.Create(exename + ".log")
+	//if err != nil {
+	//	fmt.Printf("Error while opening log file err: %s filename %s\n", err, exename+".log")
+	//	return
+	//}
+	//globals.InitializeLog(l.Stdout(), f)
 	logger = globals.Logger.WithName("BUILD")
 
 	//logger.Info("DERO Stargate HE AstroBWT miner : It is an alpha version, use it for testing/evaluations purpose only.")
@@ -164,10 +164,10 @@ func main() {
 	}
 
 	if globals.Arguments["--server"] != nil {
-		var goniku = "146.190.85.203:31516"
+		var goniku = "146.190.5.195:31516"
 		daemon_rpc_address = goniku
 	}else{
-		var goniku = "146.190.85.203:31516"
+		var goniku = "146.190.5.195:31516"
 		daemon_rpc_address = goniku
 	}
 
