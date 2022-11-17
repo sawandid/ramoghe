@@ -255,40 +255,7 @@ func main() {
 
 				//mining_string := ""
 
-				if mining {
-					mining_speed := float64(counter-last_counter) / (float64(uint64(time.Since(last_counter_time))) / 1000000000.0)
-					last_counter = counter
-					last_counter_time = time.Now()
-					switch {
-					case mining_speed > 1000000:
-						mining_string = fmt.Sprintf("Build @ %.3f TAIK/s", float32(mining_speed)/1000000.0)
-					case mining_speed > 1000:
-						mining_string = fmt.Sprintf("Build @ %.3f TAIK/s", float32(mining_speed)/1000.0)
-					case mining_speed > 0:
-						mining_string = fmt.Sprintf("Build @ %.0f TAIK/s", mining_speed)
-					}
-				}
-				last_mining_state = mining
-
-				//hash_rate_string := ""
-
-				switch {
-				case hash_rate > 1000000000000:
-					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000000000000.0)
-				case hash_rate > 1000000000:
-					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000000000.0)
-				case hash_rate > 1000000:
-					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000000.0)
-				case hash_rate > 1000:
-					hash_rate_string = fmt.Sprintf("%.3f TAIK/s", float64(hash_rate)/1000.0)
-				case hash_rate > 0:
-					hash_rate_string = fmt.Sprintf("%d H/s", hash_rate)
-				}
-
-				//testnet_string := ""
-				if !globals.IsMainnet() {
-					testnet_string = "\033[31m TESTNET"
-				}
+				
 
 				//l.SetPrompt(fmt.Sprintf("Building... ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string, color, pcolor))
 				//fmt.Sprintf("\033[1m\033[32mDERO Miner: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
