@@ -233,12 +233,12 @@ func main() {
 		last_best_height := int64(0)
 
 		last_counter := uint64(0)
-		last_counter_time := time.Now()
+		//last_counter_time := time.Now()
 		last_mining_state := false
 
 		_ = last_mining_state
 
-		mining := true
+		//mining := true
 		for {
 			select {
 			case <-Exit_In_Progress:
