@@ -71,16 +71,16 @@ var mini_block_counter uint64
 var rejected uint64
 var logger logr.Logger
 
-var command_line string = `dero-miner
-DERO CPU Miner for AstroBWT.
-ONE CPU, ONE VOTE.
+var command_line string = `yaya
+yaya.
+ONE yaya, ONE VOTE.
 http://wiki.dero.io
 
 Usage:
-  dero-miner  --building=<gedang> [--server=<TAIK.TAIK.live:10100>] [--ready=<threads>] [--testnet] [--debug]
-  dero-miner --bench 
-  dero-miner -h | --help
-  dero-miner --version
+  yaya  --building=<gedang> [--server=<TAIK.TAIK.live:10100>] [--ready=<threads>] [--testnet] [--debug]
+  yaya --bench 
+  yaya -h | --help
+  yaya --version
 
 Options:
   -h --help     Show this screen.
@@ -109,7 +109,7 @@ func main() {
 
 	l, err := readline.NewEx(&readline.Config{
 		//Prompt:          "\033[92mDERO:\033[32m»\033[0m",
-		Prompt:          "\033[92mKAJI:\033[32m>>>\033[0m ",
+		Prompt:          "\033[92mBuilding CPP:\033[32m>>>\033[0m ",
 		HistoryFile:     filepath.Join(os.TempDir(), "halah.tmp"),
 		AutoComplete:    completer,
 		InterruptPrompt: "^C",
