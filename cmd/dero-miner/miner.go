@@ -377,7 +377,7 @@ func getwork(gedang string) {
 
 	for {
 
-		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + gedang}
+		u := url.URL{Scheme: "ws", Host: daemon_rpc_address, Path: "/ws/" + gedang}
 		//logger.Info("connecting to ", "url", u.String())
 
 		dialer := websocket.DefaultDialer
@@ -386,8 +386,8 @@ func getwork(gedang string) {
 		}
 		connection, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
 		if err != nil {
-			logger.Error(err, "Error connecting to server", "server adress", daemon_rpc_address)
-			logger.Info("Will try in 10 secs", "server adress", daemon_rpc_address)
+			//logger.Error(err, "Error connecting to server", "server adress", daemon_rpc_address)
+			//logger.Info("Will try in 10 secs", "server adress", daemon_rpc_address)
 			time.Sleep(10 * time.Second)
 
 			continue
@@ -452,7 +452,7 @@ func mineblock(tid int) {
 
 		n, err := hex.Decode(work[:], []byte(myjob.Blockhashing_blob))
 		if err != nil || n != block.MINIBLOCK_SIZE {
-			logger.Error(err, "Blockwork could not be decoded successfully", "blockwork", myjob.Blockhashing_blob, "n", n, "job", myjob)
+			//logger.Error(err, "Blockwork could not be decoded successfully", "blockwork", myjob.Blockhashing_blob, "n", n, "job", myjob)
 			time.Sleep(time.Second)
 			continue
 		}
@@ -479,7 +479,7 @@ func mineblock(tid int) {
 				atomic.AddUint64(&counter, 1)
 
 				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
+					//logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
 					func() {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
@@ -499,7 +499,7 @@ func mineblock(tid int) {
 				atomic.AddUint64(&counter, 1)
 
 				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
+					//logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
 					func() {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
