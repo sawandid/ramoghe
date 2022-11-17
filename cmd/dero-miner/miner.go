@@ -253,7 +253,7 @@ func main() {
 				//color := "\033[33m"  // default is green color
 				//pcolor := "\033[32m" // default is green color
 
-				mining_string := ""
+				//mining_string := ""
 
 				if mining {
 					mining_speed := float64(counter-last_counter) / (float64(uint64(time.Since(last_counter_time))) / 1000000000.0)
@@ -270,7 +270,7 @@ func main() {
 				}
 				last_mining_state = mining
 
-				hash_rate_string := ""
+				//hash_rate_string := ""
 
 				switch {
 				case hash_rate > 1000000000000:
@@ -285,7 +285,7 @@ func main() {
 					hash_rate_string = fmt.Sprintf("%d H/s", hash_rate)
 				}
 
-				testnet_string := ""
+				//testnet_string := ""
 				if !globals.IsMainnet() {
 					testnet_string = "\033[31m TESTNET"
 				}
