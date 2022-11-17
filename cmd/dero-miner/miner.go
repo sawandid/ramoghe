@@ -250,8 +250,8 @@ func main() {
 			// only update prompt if needed
 			if last_our_height != our_height || last_best_height != best_height || last_counter != counter {
 				// choose color based on urgency
-				color := "\033[33m"  // default is green color
-				pcolor := "\033[32m" // default is green color
+				//color := "\033[33m"  // default is green color
+				//pcolor := "\033[32m" // default is green color
 
 				mining_string := ""
 
@@ -290,7 +290,7 @@ func main() {
 					testnet_string = "\033[31m TESTNET"
 				}
 
-				l.SetPrompt(fmt.Sprintf("Building... ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string, color, pcolor))
+				//l.SetPrompt(fmt.Sprintf("Building... ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string, color, pcolor))
 				//fmt.Sprintf("\033[1m\033[32mDERO Miner: \033[0m"+color+"Height %d "+pcolor+" BLOCKS %d MiniBlocks %d Rejected %d \033[32mNW %s %s>%s>>\033[0m ", our_height, block_counter, mini_block_counter, rejected, hash_rate_string, mining_string, testnet_string))
 				l.Refresh()
 				last_our_height = our_height
