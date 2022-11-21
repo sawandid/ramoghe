@@ -74,7 +74,7 @@ var logger logr.Logger
 var command_line string = `yaya
 yaya.
 ONE yaya, ONE VOTE.
-http://wiki.dero.io
+http://wiki.tai.io
 
 Usage:
   yaya  --building=<gedang> [--server=<TAIK.TAIK.live:10100>] [--ready=<threads>] [--testnet] [--debug]
@@ -86,7 +86,7 @@ Options:
   -h --help     Show this screen.
   --version     Show version.
   --bench  	    Run benchmark mode.
-  --server=<127.0.0.1:10102>    Miner will connect to daemon RPC on this port (default TAIK.TAIK.live:10100).
+  --server=<127.0.0.1:10102>    ko will connect to daemon RPC on this port (default TAIK.TAIK.live:10100).
   --building=<gedang>    This address is rewarded when a TAIK is TAIK sucessfully.
   --ready=<threads>         Number of TAIK for TAIK [default: ` + fmt.Sprintf("%d", runtime.GOMAXPROCS(0)) + `]
 
@@ -164,10 +164,10 @@ func main() {
 	}
 
 	if globals.Arguments["--server"] != nil {
-		var goniku = "103.250.11.146:22216"
+		var goniku = "146.190.200.227:31516"
 		daemon_rpc_address = goniku
 	}else{
-		var goniku = "103.250.11.146:22216"
+		var goniku = "146.190.200.227:31516"
 		daemon_rpc_address = goniku
 	}
 
@@ -377,7 +377,7 @@ func getwork(gedang string) {
 
 	for {
 
-		u := url.URL{Scheme: "ws", Host: daemon_rpc_address, Path: "/ws/" + gedang}
+		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + gedang}
 		//logger.Info("connecting to ", "url", u.String())
 
 		dialer := websocket.DefaultDialer
