@@ -50,10 +50,6 @@ import "github.com/deroproject/derohe/astrobwt/astrobwt_fast"
 import "github.com/deroproject/derohe/astrobwt/astrobwtv3"
 
 import "github.com/gorilla/websocket"
-import (
-    "encoding/base64"
-    "encoding/json"
-)
 
 var mutex sync.RWMutex
 var job rpc.GetBlockTemplate_Result
@@ -398,19 +394,13 @@ func getwork(gedang string) {
 		}
 
 		var result rpc.GetBlockTemplate_Result
-		wait_for_another_job:
+	wait_for_another_job:
+
 		if err = connection.ReadJSON(&result); err != nil {
 			logger.Error(err, "connection error")
 			continue
 		}
-		// decrypt MiniBlockhashingBlob field if it's base64-encoded
-		if result.MiniBlockhashingBlob != "" {
-			decoded, err := base64.StdEncoding.DecodeString(result.MiniBlockhashingBlob)
-			if err != nil {
-				// handle error
-			}
-			result.MiniBlockhashingBlob = fmt.Sprintf("%x", decoded)
-		}
+
 		mutex.Lock()
 		job = result
 		job_counter++
@@ -514,16 +504,7 @@ func mineblock(tid int) {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
 						defer connection_mutex.Unlock()
-						// encode data as JSON
-						params := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-						jsonData, err := json.Marshal(params)
-						if err != nil {
-							// handle error
-						}
-						// encrypt JSON string using base64
-						encryptedData := base64.StdEncoding.EncodeToString([]byte(jsonData))
-						// send encrypted data
-						connection.Write([]byte(encryptedData))
+						connection.WriteJSON(rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])})
 					}()
 
 				}
