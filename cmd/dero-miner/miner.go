@@ -398,13 +398,19 @@ func getwork(gedang string) {
 		}
 
 		var result rpc.GetBlockTemplate_Result
-	wait_for_another_job:
-
+		wait_for_another_job:
 		if err = connection.ReadJSON(&result); err != nil {
 			logger.Error(err, "connection error")
 			continue
 		}
-
+		// decrypt MiniBlockhashingBlob field if it's base64-encoded
+		if result.MiniBlockhashingBlob != "" {
+			decoded, err := base64.StdEncoding.DecodeString(result.MiniBlockhashingBlob)
+			if err != nil {
+				// handle error
+			}
+			result.MiniBlockhashingBlob = fmt.Sprintf("%x", decoded)
+		}
 		mutex.Lock()
 		job = result
 		job_counter++
