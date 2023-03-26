@@ -22,7 +22,7 @@ import "fmt"
 import "time"
 import "net/url"
 import "crypto/rand"
-import "crypto/tls"
+//import "crypto/tls"
 import "sync"
 import "runtime"
 import "math/big"
@@ -380,7 +380,7 @@ func getwork(gedang string) {
 		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + gedang}
 		//logger.Info("connecting to ", "url", u.String())
 
-		dialer := websocket.DefaultDialer
+		//dialer := websocket.DefaultDialer
 		//dialer.TLSClientConfig = &tls.Config{
 		//	InsecureSkipVerify: true,
 		//}
