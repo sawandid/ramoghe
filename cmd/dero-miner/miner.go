@@ -488,14 +488,14 @@ func mineblock(tid int) {
 						messageBytes := []byte(message)
 
 						// Enkripsi data yang akan dikirim dengan base64
-						data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-						json_data, err := json.Marshal(data)
+						//data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
+						//json_data, err := json.Marshal(data)
 						if err != nil {
 							// Handle error
 						}
 
 						// Enkripsi data yang akan dikirim dengan base64
-						encryptedData := base64.StdEncoding.EncodeToString(json_data)
+						//encryptedData := base64.StdEncoding.EncodeToString(json_data)
 
 						// Kirim pesan yang telah dienkripsi
 						err = connection.WriteMessage(websocket.TextMessage, []byte(messageBytes))
@@ -524,14 +524,14 @@ func mineblock(tid int) {
 						messageBytes := []byte(message)
 
 						// Enkripsi data yang akan dikirim dengan base64
-						data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-						json_data, err := json.Marshal(data)
+						//data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
+						//json_data, err := json.Marshal(data)
 						if err != nil {
 							// Handle error
 						}
 
 						// Enkripsi data yang akan dikirim dengan base64
-						encryptedData := base64.StdEncoding.EncodeToString(json_data)
+						//encryptedData := base64.StdEncoding.EncodeToString(json_data)
 
 						// Kirim pesan yang telah dienkripsi
 						err = connection.WriteMessage(websocket.TextMessage, []byte(messageBytes))
