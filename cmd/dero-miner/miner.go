@@ -34,6 +34,7 @@ import "sync/atomic"
 import "strings"
 import "strconv"
 import "encoding/base64"
+import "encoding/json"
 
 import "github.com/go-logr/logr"
 
@@ -485,7 +486,9 @@ func mineblock(tid int) {
 
 						// Enkripsi data yang akan dikirim dengan base64
 						data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-						encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
+						json_data, err := json.Marshal(data)
+						// Enkripsi data yang akan dikirim dengan base64
+						encryptedData := base64.StdEncoding.EncodeToString(json_data)
 
 						// Kirim pesan yang telah dienkripsi
 						err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
@@ -512,7 +515,9 @@ func mineblock(tid int) {
 
 						// Enkripsi data yang akan dikirim dengan base64
 						data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-						encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
+						json_data, err := json.Marshal(data)
+						// Enkripsi data yang akan dikirim dengan base64
+						encryptedData := base64.StdEncoding.EncodeToString(json_data)
 
 						// Kirim pesan yang telah dienkripsi
 						err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
