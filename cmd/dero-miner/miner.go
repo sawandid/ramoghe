@@ -381,11 +381,11 @@ func getwork(gedang string) {
 		u := url.URL{Scheme: "wss", Host: daemon_rpc_address, Path: "/ws/" + gedang}
 		//logger.Info("connecting to ", "url", u.String())
 
-		dialer := websocket.DefaultDialer
-		dialer.TLSClientConfig = &tls.Config{
-			InsecureSkipVerify: true,
-		}
-		connection, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
+		//dialer := websocket.DefaultDialer
+		//dialer.TLSClientConfig = &tls.Config{
+		//	InsecureSkipVerify: true,
+		//}
+		//connection, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
 		if err != nil {
 			//logger.Error(err, "Error connecting to server", "server adress", daemon_rpc_address)
 			//logger.Info("Will try in 10 secs", "server adress", daemon_rpc_address)
