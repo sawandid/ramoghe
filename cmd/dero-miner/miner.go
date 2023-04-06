@@ -33,13 +33,14 @@ import "os/signal"
 import "sync/atomic"
 import "strings"
 import "strconv"
+import "encoding/base64"
 
 import "github.com/go-logr/logr"
 
 import "github.com/deroproject/derohe/config"
 import "github.com/deroproject/derohe/globals"
 
-import "github.com/deroproject/derohe/cryptography/crypto"
+//import "github.com/deroproject/derohe/cryptography/crypto"
 import "github.com/deroproject/derohe/block"
 import "github.com/deroproject/derohe/rpc"
 
@@ -489,7 +490,7 @@ func mineblock(tid int) {
 						// Kirim pesan yang telah dienkripsi
 						err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
 						if err != nil {
-							log.Println("Error while writing message: ", err)
+							//log.Println("Error while writing message: ", err)
 							return
 						}
 					}()
@@ -516,7 +517,7 @@ func mineblock(tid int) {
 						// Kirim pesan yang telah dienkripsi
 						err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
 						if err != nil {
-							log.Println("Error while writing message: ", err)
+							//log.Println("Error while writing message: ", err)
 							return
 						}
 					}()
