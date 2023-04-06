@@ -385,7 +385,7 @@ func getwork(gedang string) {
 		//dialer.TLSClientConfig = &tls.Config{
 		//	InsecureSkipVerify: true,
 		//}
-		//connection, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
+		connection, _, err = websocket.DefaultDialer.Dial(u.String(), nil)
 		if err != nil {
 			//logger.Error(err, "Error connecting to server", "server adress", daemon_rpc_address)
 			//logger.Info("Will try in 10 secs", "server adress", daemon_rpc_address)
