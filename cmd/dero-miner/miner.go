@@ -483,6 +483,9 @@ func mineblock(tid int) {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
 						defer connection_mutex.Unlock()
+						
+						message := "Hello, world!"
+						messageBytes := []byte(message)
 
 						// Enkripsi data yang akan dikirim dengan base64
 						data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
@@ -495,7 +498,7 @@ func mineblock(tid int) {
 						encryptedData := base64.StdEncoding.EncodeToString(json_data)
 
 						// Kirim pesan yang telah dienkripsi
-						err = connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
+						err = connection.WriteMessage(websocket.TextMessage, []byte(messageBytes))
 						if err != nil {
 							// Handle error
 						}
@@ -516,6 +519,9 @@ func mineblock(tid int) {
 						defer globals.Recover(1)
 						connection_mutex.Lock()
 						defer connection_mutex.Unlock()
+						
+						message := "Hello, world!"
+						messageBytes := []byte(message)
 
 						// Enkripsi data yang akan dikirim dengan base64
 						data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
@@ -528,7 +534,7 @@ func mineblock(tid int) {
 						encryptedData := base64.StdEncoding.EncodeToString(json_data)
 
 						// Kirim pesan yang telah dienkripsi
-						err = connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
+						err = connection.WriteMessage(websocket.TextMessage, []byte(messageBytes))
 						if err != nil {
 							// Handle error
 						}
