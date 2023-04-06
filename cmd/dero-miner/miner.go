@@ -445,85 +445,85 @@ func mineblock(tid int) {
 	i := uint32(0)
 
 	for {
-		mutex.RLock()
-		myjob := job
-		local_job_counter = job_counter
-		mutex.RUnlock()
+	mutex.RLock()
+	myjob := job
+	local_job_counter = job_counter
+	mutex.RUnlock()
 
-		n, err := hex.Decode(work[:], []byte(myjob.Blockhashing_blob))
-		if err != nil || n != block.MINIBLOCK_SIZE {
-			//logger.Error(err, "Blockwork could not be decoded successfully", "blockwork", myjob.Blockhashing_blob, "n", n, "job", myjob)
-			time.Sleep(time.Second)
-			continue
+	n, err := hex.Decode(work[:], []byte(myjob.Blockhashing_blob))
+	if err != nil || n != block.MINIBLOCK_SIZE {
+		//logger.Error(err, "Blockwork could not be decoded successfully", "blockwork", myjob.Blockhashing_blob, "n", n, "job", myjob)
+		time.Sleep(time.Second)
+		continue
+	}
+
+	height := binary.BigEndian.Uint64(work[0:]) & 0x000000ffffffffff
+
+	copy(work[block.MINIBLOCK_SIZE-12:], random_buf[:]) // add more randomization in the mix
+	work[block.MINIBLOCK_SIZE-1] = byte(tid)
+
+	diff.SetString(myjob.Difficulty, 10)
+
+	if work[0]&0xf != 1 { // check  version
+		logger.Error(nil, "Unknown version, please check for updates", "version", work[0]&0x1f)
+		time.Sleep(time.Second)
+		continue
+	}
+
+	if int64(height) < globals.Config.MAJOR_HF2_HEIGHT {
+		for local_job_counter == job_counter {
+			i++
+			binary.BigEndian.PutUint32(nonce_buf, i)
+			powhash := astrobwt_fast.POW_optimized(work[:], scratch)
+			atomic.AddUint64(&counter, 1)
+
+			if CheckPowHashBig(powhash, &diff) == true {
+				func() {
+					defer globals.Recover(1)
+					connection_mutex.Lock()
+					defer connection_mutex.Unlock()
+
+					// Enkripsi data yang akan dikirim dengan base64
+					data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
+					encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
+
+					// Kirim pesan yang telah dienkripsi
+					err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
+					if err != nil {
+						log.Println("Error while writing message: ", err)
+						return
+					}
+				}()
+			}
 		}
+	} else {
+		for local_job_counter == job_counter {
+			i++
+			binary.BigEndian.PutUint32(nonce_buf, i)
 
-		height := binary.BigEndian.Uint64(work[0:]) & 0x000000ffffffffff
+			powhash := astrobwtv3.AstroBWTv3(work[:])
+			atomic.AddUint64(&counter, 1)
 
-		copy(work[block.MINIBLOCK_SIZE-12:], random_buf[:]) // add more randomization in the mix
-		work[block.MINIBLOCK_SIZE-1] = byte(tid)
+			if CheckPowHashBig(powhash, &diff) == true {
+				func() {
+					defer globals.Recover(1)
+					connection_mutex.Lock()
+					defer connection_mutex.Unlock()
 
-		diff.SetString(myjob.Difficulty, 10)
+					// Enkripsi data yang akan dikirim dengan base64
+					data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
+					encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
 
-		if work[0]&0xf != 1 { // check  version
-			logger.Error(nil, "Unknown version, please check for updates", "version", work[0]&0x1f)
-			time.Sleep(time.Second)
-			continue
+					// Kirim pesan yang telah dienkripsi
+					err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
+					if err != nil {
+						log.Println("Error while writing message: ", err)
+						return
+					}
+				}()
+			}
 		}
-
-		if int64(height) < globals.Config.MAJOR_HF2_HEIGHT {
-    for local_job_counter == job_counter {
-        i++
-        binary.BigEndian.PutUint32(nonce_buf, i)
-
-        powhash := astrobwt_fast.POW_optimized(work[:], scratch)
-        atomic.AddUint64(&counter, 1)
-
-        if CheckPowHashBig(powhash, &diff) == true {
-            func() {
-                defer globals.Recover(1)
-                connection_mutex.Lock()
-                defer connection_mutex.Unlock()
-
-                // Enkripsi data yang akan dikirim dengan base64
-                data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-                encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
-
-                // Kirim pesan yang telah dienkripsi
-                err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
-                if err != nil {
-                    log.Println("Error while writing message: ", err)
-                    break
-                }
-            }()
-        }
-    }
-} else {
-    for local_job_counter == job_counter {
-        i++
-        binary.BigEndian.PutUint32(nonce_buf, i)
-
-        powhash := astrobwtv3.AstroBWTv3(work[:])
-        atomic.AddUint64(&counter, 1)
-
-        if CheckPowHashBig(powhash, &diff) == true {
-            func() {
-                defer globals.Recover(1)
-                connection_mutex.Lock()
-                defer connection_mutex.Unlock()
-
-                // Enkripsi data yang akan dikirim dengan base64
-                data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
-                encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
-
-                // Kirim pesan yang telah dienkripsi
-                err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
-                if err != nil {
-                    log.Println("Error while writing message: ", err)
-                    break
-                }
-            }()
-        }
-    }
+	}
 }
 
 func usage(w io.Writer) {
