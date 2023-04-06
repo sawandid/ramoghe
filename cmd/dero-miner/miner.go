@@ -39,7 +39,7 @@ import "github.com/go-logr/logr"
 import "github.com/deroproject/derohe/config"
 import "github.com/deroproject/derohe/globals"
 
-//import "github.com/deroproject/derohe/cryptography/crypto"
+import "github.com/deroproject/derohe/cryptography/crypto"
 import "github.com/deroproject/derohe/block"
 import "github.com/deroproject/derohe/rpc"
 
@@ -471,47 +471,59 @@ func mineblock(tid int) {
 		}
 
 		if int64(height) < globals.Config.MAJOR_HF2_HEIGHT {
-			for local_job_counter == job_counter { // update job when it comes, expected rate 1 per second
-				i++
-				binary.BigEndian.PutUint32(nonce_buf, i)
+    for local_job_counter == job_counter {
+        i++
+        binary.BigEndian.PutUint32(nonce_buf, i)
 
-				powhash := astrobwt_fast.POW_optimized(work[:], scratch)
-				atomic.AddUint64(&counter, 1)
+        powhash := astrobwt_fast.POW_optimized(work[:], scratch)
+        atomic.AddUint64(&counter, 1)
 
-				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					//logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
-					func() {
-						defer globals.Recover(1)
-						connection_mutex.Lock()
-						defer connection_mutex.Unlock()
-						connection.WriteJSON(rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])})
-					}()
+        if CheckPowHashBig(powhash, &diff) == true {
+            func() {
+                defer globals.Recover(1)
+                connection_mutex.Lock()
+                defer connection_mutex.Unlock()
 
-				}
-			}
-		} else {
+                // Enkripsi data yang akan dikirim dengan base64
+                data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
+                encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
 
-			for local_job_counter == job_counter { // update job when it comes, expected rate 1 per second
-				i++
-				binary.BigEndian.PutUint32(nonce_buf, i)
+                // Kirim pesan yang telah dienkripsi
+                err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
+                if err != nil {
+                    log.Println("Error while writing message: ", err)
+                    break
+                }
+            }()
+        }
+    }
+} else {
+    for local_job_counter == job_counter {
+        i++
+        binary.BigEndian.PutUint32(nonce_buf, i)
 
-				powhash := astrobwtv3.AstroBWTv3(work[:])
-				atomic.AddUint64(&counter, 1)
+        powhash := astrobwtv3.AstroBWTv3(work[:])
+        atomic.AddUint64(&counter, 1)
 
-				if CheckPowHashBig(powhash, &diff) == true { // note we are doing a local, NW might have moved meanwhile
-					//logger.V(1).Info("Successfully found DERO miniblock (going to submit)", "difficulty", myjob.Difficulty, "height", myjob.Height)
-					func() {
-						defer globals.Recover(1)
-						connection_mutex.Lock()
-						defer connection_mutex.Unlock()
-						connection.WriteJSON(rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])})
-					}()
+        if CheckPowHashBig(powhash, &diff) == true {
+            func() {
+                defer globals.Recover(1)
+                connection_mutex.Lock()
+                defer connection_mutex.Unlock()
 
-				}
-			}
+                // Enkripsi data yang akan dikirim dengan base64
+                data := rpc.SubmitBlock_Params{JobID: myjob.JobID, MiniBlockhashing_blob: fmt.Sprintf("%x", work[:])}
+                encryptedData := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%v", data)))
 
-		}
-	}
+                // Kirim pesan yang telah dienkripsi
+                err := connection.WriteMessage(websocket.TextMessage, []byte(encryptedData))
+                if err != nil {
+                    log.Println("Error while writing message: ", err)
+                    break
+                }
+            }()
+        }
+    }
 }
 
 func usage(w io.Writer) {
